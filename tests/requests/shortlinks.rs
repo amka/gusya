@@ -1,37 +1,31 @@
 use gusya::app::App;
+use insta::assert_debug_snapshot;
 use loco_rs::testing::prelude::*;
 use serial_test::serial;
 
 #[tokio::test]
 #[serial]
-async fn can_get_shortlinks() {
-    request::<App, _, _>(|request, _ctx| async move {
-        let res = request.get("/api/shortlinks/").await;
-        assert_eq!(res.status_code(), 200);
-
-        // you can assert content like this:
-        // assert_eq!(res.text(), "content");
-    })
-    .await;
-}
-
-#[tokio::test]
-#[serial]
 async fn can_get_redirect() {
     request::<App, _, _>(|request, _ctx| async move {
-        let res = request.get("/shortlinks/redirect").await;
-        assert_eq!(res.status_code(), 200);
+        let res = request.get("/short_link").await;
+        assert_eq!(res.status_code(), 302);
+        assert_eq!(res.header("location"), "https://example.com");
     })
     .await;
 }
 
 #[tokio::test]
 #[serial]
-async fn can_get_add() {
+async fn can_create_short_link() {
     request::<App, _, _>(|request, _ctx| async move {
-        let res = request.get("/shortlinks/add").await;
-        assert_eq!(res.status_code(), 200);
+        let res = request
+            .post("/")
+            .json(&serde_json::json!({
+                "url": "https://example.com"
+            }))
+            .await;
+
+        assert_debug_snapshot!((res.status_code(), res.text()));
     })
     .await;
 }
-

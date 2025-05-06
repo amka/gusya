@@ -1,0 +1,8 @@
+---
+source: tests/requests/shortlinks.rs
+expression: "(res.status_code(), res.text())"
+---
+(
+    200,
+    "{\"short_code\":\"short_code\"}",
+)
