@@ -1,3 +1,4 @@
+use axum::http::StatusCode;
 use loco_rs::controller::format;
 use loco_rs::prelude::*;
 use serde::{Deserialize, Serialize};
@@ -10,5 +11,7 @@ pub struct AddShortLinkResponse {
 }
 
 pub fn not_found(v: impl ViewRenderer) -> loco_rs::Result<Response> {
-    format::render().view(&v, "not-found.html", data!({}))
+    format::render()
+        .status(StatusCode::NOT_FOUND)
+        .view(&v, "not-found.html", data!({}))
 }

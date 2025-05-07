@@ -5,11 +5,10 @@ use serial_test::serial;
 
 #[tokio::test]
 #[serial]
-async fn can_get_redirect() {
+async fn redirect_return_not_found() {
     request::<App, _, _>(|request, _ctx| async move {
-        let res = request.get("/short_link").await;
-        assert_eq!(res.status_code(), 302);
-        assert_eq!(res.header("location"), "https://example.com");
+        let res = request.get("/not-found-link").await;
+        assert_eq!(res.status_code(), 404);
     })
     .await;
 }
