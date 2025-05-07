@@ -1,42 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gusya - Ощипать ваши ссылки</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        // tailwind.config = {
-        //     darkMode: 'class',
-        //     theme: {
-        //         extend: {
-        //             colors: {
-        //                 primary: {
-        //                     50: '#fff7ed',
-        //                     100: '#ffedd5',
-        //                     200: '#fed7aa',
-        //                     300: '#fdba74',
-        //                     400: '#fb923c',
-        //                     500: '#f97316',
-        //                     600: '#ea580c',
-        //                     700: '#c2410c',
-        //                     800: '#9a3412',
-        //                     900: '#7c2d12',
-        //                 },
-        //                 gusya: {
-        //                     light: '#ffb347',
-        //                     dark: '#ff8c00'
-        //                 }
-        //             },
-        //             fontFamily: {
-        //                 sans: ['Inter', 'sans-serif'],
-        //             },
-        //         }
-        //     }
-        // }
-    </script>
+{% extends "base.html" %}
+
+{% block title %}Gusya - Ощипать ваши ссылки{% endblock %}
+
+{% block head_css %}
     <style>
         /*@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap');*/
 
@@ -70,9 +36,10 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
     </style>
-</head>
-<body>
+{% endblock %}
+
 <!-- Header -->
+{% block body %}
 <header class="container mx-auto px-4 py-6 flex justify-between items-center">
     <div class="flex items-center">
         <!--    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 flex items-center justify-center mr-3">-->
@@ -603,32 +570,9 @@
     </div>
 </footer>
 
+{% endblock %}
+{% block extra_js %}
 <script>
-    // Theme toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-
-    // Check for saved theme preference or use preferred color scheme
-    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        html.classList.add('dark');
-        html.setAttribute('data-theme', 'dark')
-        // themeToggle.classList.add('dark');
-    }
-
-    themeToggle.addEventListener('click', () => {
-        html.classList.toggle('dark');
-        // themeToggle.classList.toggle('dark');
-
-        // Save preference to localStorage
-        if (html.classList.contains('dark')) {
-            localStorage.setItem('theme', 'dark');
-            html.setAttribute('data-theme', 'dark')
-        } else {
-            html.setAttribute('data-theme', 'light')
-            localStorage.setItem('theme', 'light');
-        }
-    });
-
     // FAQ accordion
     const faqToggles = document.querySelectorAll('.faq-toggle');
 
@@ -712,5 +656,4 @@
         }, 2000);
     }
 </script>
-</body>
-</html>
+{% endblock %}

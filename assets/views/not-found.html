@@ -1,101 +1,65 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Страница не найдена | Gusya</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!--    <script>-->
-<!--        tailwind.config = {-->
-<!--            darkMode: 'class',-->
-<!--            theme: {-->
-<!--                extend: {-->
-<!--                    colors: {-->
-<!--                        primary: {-->
-<!--                            50: '#fff7ed',-->
-<!--                            100: '#ffedd5',-->
-<!--                            200: '#fed7aa',-->
-<!--                            300: '#fdba74',-->
-<!--                            400: '#fb923c',-->
-<!--                            500: '#f97316',-->
-<!--                            600: '#ea580c',-->
-<!--                            700: '#c2410c',-->
-<!--                            800: '#9a3412',-->
-<!--                            900: '#7c2d12',-->
-<!--                        },-->
-<!--                        gusya: {-->
-<!--                            light: '#ffb347',-->
-<!--                            dark: '#ff8c00'-->
-<!--                        }-->
-<!--                    },-->
-<!--                    fontFamily: {-->
-<!--                        sans: ['Inter', 'sans-serif'],-->
-<!--                    },-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
-    <style>
-        /*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*/
+{% extends "base.html" %}
 
-        body {
-            /*font-family: 'Inter', sans-serif;*/
-            transition: background-color 0.3s, color 0.3s;
-        }
+{% block title %}404 - Страница не найдена | Gusya{% endblock %}
 
-        .theme-toggle {
-            position: relative;
-            width: 50px;
-            height: 26px;
-            border-radius: 13px;
-            background-color: #e2e8f0;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
 
-        .theme-toggle.dark {
-            background-color: #475569;
-        }
+{% block head_css %}
+<style>
+    /*@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap');*/
 
-        .toggle-thumb {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: white;
-            transition: transform 0.3s;
-        }
+    body {
+        /*font-family: 'Noto Sans', sans-serif;*/
+        transition: background-color 0.3s, color 0.3s;
+    }
 
-        .theme-toggle.dark .toggle-thumb {
-            transform: translateX(24px);
-        }
+    .hero-gradient {
+        background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%);
+    }
 
-        .goose-animation {
-            animation: float 6s ease-in-out infinite;
-        }
+    [data-theme=dark] .hero-gradient {
+        background: linear-gradient(135deg, #ff8c00 0%, #e67e22 100%);
+    }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
 
-        .pulse {
-            animation: pulse 2s infinite;
-        }
+    [data-theme=dark] .feature-card:hover {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+    .url-input {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme=dark] .url-input {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    .goose-animation {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
 <!-- Header -->
 <header class="container mx-auto px-4 py-6 flex justify-between items-center">
     <div class="flex items-center">
@@ -171,29 +135,10 @@
     </div>
 </footer>
 
+{% endblock %}
+
+{% block extra_js %}
 <script>
-    // Theme toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-
-    // Check for saved theme preference or use preferred color scheme
-    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        html.classList.add('dark');
-        themeToggle.classList.add('dark');
-    }
-
-    themeToggle.addEventListener('click', () => {
-        html.classList.toggle('dark');
-        themeToggle.classList.toggle('dark');
-
-        // Save preference to localStorage
-        if (html.classList.contains('dark')) {
-            localStorage.setItem('theme', 'dark');
-        } else {
-            localStorage.setItem('theme', 'light');
-        }
-    });
-
     // Add some fun interaction
     const goose = document.querySelector('.goose-animation');
     goose.addEventListener('click', () => {
@@ -203,5 +148,4 @@
         }, 1000);
     });
 </script>
-</body>
-</html>
+{% endblock %}
