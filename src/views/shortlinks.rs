@@ -1,9 +1,4 @@
-use serde::{Deserialize, Serialize};
-
-#[derive(Deserialize, Debug)]
-pub struct AddShortLinkPayload {
-    pub url: String,
-}
+use serde::Serialize;
 
 #[derive(Serialize, Debug)]
 pub struct AddShortLinkResponse {

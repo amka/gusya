@@ -1,10 +1,23 @@
-use crate::views::shortlinks::{AddShortLinkPayload, AddShortLinkResponse};
+use crate::models::shortlinks::{AddParams, Model};
+use crate::views::shortlinks::AddShortLinkResponse;
 use axum::body::Body;
 use axum::debug_handler;
 use axum::http::StatusCode;
 use loco_rs::prelude::*;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use tracing::debug;
+
+#[derive(Deserialize, Debug, Validate)]
+pub struct AddShortLinkPayload {
+    #[validate(url)]
+    pub url: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub custom_alias: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub domain: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub password: Option<String>,
+}
 
 #[debug_handler]
 pub async fn redirect(
@@ -29,7 +42,17 @@ pub async fn add(
     Json(payload): Json<AddShortLinkPayload>,
 ) -> Result<Response> {
     debug!("add short link from {:?}", payload);
-    let short_code = "short_code".to_string();
+
+    // Covert AddShortLinkPayload to AddParams
+    let params = AddParams {
+        original_url: payload.url,
+        custom_alias: payload.custom_alias,
+        domain: payload.domain,
+        password: payload.password,
+    };
+
+    let link = Model::create_link(&_ctx.db, &params).await?;
+    let short_code = link.short_code;
     format::json(AddShortLinkResponse { short_code })
 }
 
