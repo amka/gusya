@@ -8,6 +8,7 @@ use nanoid::nanoid;
 use sea_orm::entity::prelude::*;
 use sea_orm::Set;
 use serde::Deserialize;
+use tracing::debug;
 use url::Url;
 
 pub type Shortlinks = Entity;
@@ -93,7 +94,7 @@ impl Model {
         };
 
         // Создание ActiveModel
-        let mut link = ActiveModel {
+        let link = ActiveModel {
             original_url: Set(Some(params.original_url.clone())),
             short_code: Set(short_code),
             custom_alias: Set(params.custom_alias.clone()),
@@ -127,6 +128,15 @@ impl Model {
         // Реализация проверки через таблицу BlockedDomain
         // ...
         todo!("Add BlockedDomain validation")
+    }
+
+    pub async fn find_by_code(db: &DatabaseConnection, code: &str) -> Result<Option<Self>, Error> {
+        let link = Entity::find()
+            .filter(Column::ShortCode.eq(code))
+            .one(db)
+            .await?;
+
+        Ok(link)
     }
 }
 

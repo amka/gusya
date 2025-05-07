@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Страница не найдена | Gusya</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!--    <script>-->
+<!--        tailwind.config = {-->
+<!--            darkMode: 'class',-->
+<!--            theme: {-->
+<!--                extend: {-->
+<!--                    colors: {-->
+<!--                        primary: {-->
+<!--                            50: '#fff7ed',-->
+<!--                            100: '#ffedd5',-->
+<!--                            200: '#fed7aa',-->
+<!--                            300: '#fdba74',-->
+<!--                            400: '#fb923c',-->
+<!--                            500: '#f97316',-->
+<!--                            600: '#ea580c',-->
+<!--                            700: '#c2410c',-->
+<!--                            800: '#9a3412',-->
+<!--                            900: '#7c2d12',-->
+<!--                        },-->
+<!--                        gusya: {-->
+<!--                            light: '#ffb347',-->
+<!--                            dark: '#ff8c00'-->
+<!--                        }-->
+<!--                    },-->
+<!--                    fontFamily: {-->
+<!--                        sans: ['Inter', 'sans-serif'],-->
+<!--                    },-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+    <style>
+        /*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');*/
+
+        body {
+            /*font-family: 'Inter', sans-serif;*/
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            border-radius: 13px;
+            background-color: #e2e8f0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .theme-toggle.dark {
+            background-color: #475569;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: white;
+            transition: transform 0.3s;
+        }
+
+        .theme-toggle.dark .toggle-thumb {
+            transform: translateX(24px);
+        }
+
+        .goose-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+<!-- Header -->
+<header class="container mx-auto px-4 py-6 flex justify-between items-center">
+    <div class="flex items-center">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 flex items-center justify-center mr-3">
+            <i class="fas fa-feather text-white text-xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Gusya</h1>
+    </div>
+
+    <div class="flex items-center space-x-4">
+        <div class="theme-toggle" id="themeToggle">
+            <div class="toggle-thumb"></div>
+        </div>
+        <a href="/" class="px-4 py-2 rounded-md font-medium bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:from-amber-500 hover:to-orange-600 transition">На главную</a>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="flex-grow flex items-center justify-center py-12 px-4">
+    <div class="container mx-auto text-center">
+        <div class="max-w-3xl mx-auto">
+            <!-- Animated Goose -->
+            <div class="goose-animation mb-12">
+                <svg width="200" height="200" viewBox="0 0 200 200" class="mx-auto">
+                    <path d="M100,50 C120,30 140,20 160,30 C180,40 190,60 180,80 C170,100 150,110 130,100 C110,90 100,70 100,50 Z"
+                          fill="#FFB347" class="dark:fill-amber-500"/>
+                    <circle cx="130" cy="60" r="5" fill="white"/>
+                    <circle cx="130" cy="60" r="2" fill="black"/>
+                    <path d="M80,80 Q90,90 100,85 Q110,90 120,80" stroke="black" stroke-width="2" fill="none"/>
+                    <path d="M60,120 Q70,100 80,110 Q90,100 100,110 Q110,100 120,110 Q130,100 140,120"
+                          stroke="#FFB347" stroke-width="8" class="dark:stroke-amber-500" fill="none"/>
+                </svg>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">404</h1>
+            <h2 class="text-2xl md:text-3xl font-semibold mb-6">Ой! Страница улетела с гусями</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg mx-auto">
+                Похоже, страница, которую вы ищете, была удалена, перемещена или никогда не существовала.
+                Но не переживайте - наш гусь уже ищет её!
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+                <a href="/" class="px-6 py-3 rounded-md font-medium bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:from-amber-500 hover:to-orange-600 transition pulse">
+                    <i class="fas fa-home mr-2"></i> Вернуться на главную
+                </a>
+                <a href="#" class="px-6 py-3 rounded-md font-medium border border-amber-500 text-amber-500 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+                    <i class="fas fa-envelope mr-2"></i> Сообщить о проблеме
+                </a>
+            </div>
+
+            <div class="mt-12 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md inline-block max-w-md">
+                <h3 class="text-lg font-semibold mb-3">Попробуйте эти полезные ссылки:</h3>
+                <ul class="space-y-2 text-left">
+                    <li><a href="/" class="text-amber-500 dark:text-amber-400 hover:underline">Главная страница</a></li>
+                    <li><a href="/features" class="text-amber-500 dark:text-amber-400 hover:underline">Возможности сервиса</a></li>
+                    <li><a href="/pricing" class="text-amber-500 dark:text-amber-400 hover:underline">Тарифные планы</a></li>
+                    <li><a href="/support" class="text-amber-500 dark:text-amber-400 hover:underline">Поддержка</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300 py-8">
+    <div class="container mx-auto px-4 text-center">
+        <p>© 2023 Gusya - Сервис сокращения ссылок. Все права защищены.</p>
+        <div class="flex justify-center space-x-6 mt-4">
+            <a href="#" class="hover:text-amber-400 transition">Политика конфиденциальности</a>
+            <a href="#" class="hover:text-amber-400 transition">Условия использования</a>
+            <a href="#" class="hover:text-amber-400 transition">Контакты</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+
+    // Check for saved theme preference or use preferred color scheme
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+        themeToggle.classList.add('dark');
+    }
+
+    themeToggle.addEventListener('click', () => {
+        html.classList.toggle('dark');
+        themeToggle.classList.toggle('dark');
+
+        // Save preference to localStorage
+        if (html.classList.contains('dark')) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    // Add some fun interaction
+    const goose = document.querySelector('.goose-animation');
+    goose.addEventListener('click', () => {
+        goose.classList.add('animate-spin');
+        setTimeout(() => {
+            goose.classList.remove('animate-spin');
+        }, 1000);
+    });
+</script>
+</body>
+</html>

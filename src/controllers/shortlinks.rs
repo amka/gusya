@@ -1,8 +1,10 @@
 use crate::models::shortlinks::{AddParams, Model};
+use crate::views;
 use crate::views::shortlinks::AddShortLinkResponse;
 use axum::body::Body;
 use axum::debug_handler;
 use axum::http::StatusCode;
+use loco_rs::controller::ErrorDetail;
 use loco_rs::prelude::*;
 use serde::Deserialize;
 use tracing::debug;
@@ -19,17 +21,56 @@ pub struct AddShortLinkPayload {
     pub password: Option<String>,
 }
 
+/// Redirect to original URL by short code
+///
+/// # Errors
+///
+/// * `Error::NotFound` - if the `Shortlink` is not found in database
+/// * `Error::CustomError(StatusCode::GONE)` - if the `Shortlink` is not active
+///
+/// # Response
+///
+/// The response will be an HTTP 302 redirect with the location header set to the original URL.
 #[debug_handler]
 pub async fn redirect(
-    Path(short_code): Path<String>,
+    Path(code): Path<String>,
     State(_ctx): State<AppContext>,
-) -> Result<impl IntoResponse> {
-    debug!("redirect to {}", short_code);
+    ViewEngine(v): ViewEngine<TeraView>,
+) -> Result<Response> {
+    debug!("redirect from {}", code);
+
+    // Поиск ссылки в базе с кешированием
+    let link = Model::find_by_code(&_ctx.db, &code).await?;
+
+    // Если ссылка не найдена
+    if link.is_none() {
+        return views::shortlinks::not_found(v);
+    }
+    let link = link.unwrap();
+
+    // Check if link is active
+    if !link.is_active.unwrap() {
+        return Err(Error::CustomError(
+            StatusCode::GONE,
+            ErrorDetail::with_reason("Ссылка деактивирована"),
+        ));
+    }
+
+    if let Some(expires_at) = link.expires_at {
+        if chrono::Utc::now() > expires_at.and_utc() {
+            return Err(Error::CustomError(
+                StatusCode::GONE,
+                ErrorDetail::with_reason("Срок действия ссылки истек"),
+            ));
+        }
+    }
+
+    // TODO: Check for password
 
     // Set the location header and 302 status code
     let response = Response::builder()
         .status(StatusCode::FOUND)
-        .header("Location", "https://example.com")
+        .header("Location", link.original_url.unwrap())
         .header("Access-Control-Allow-Origin", "*")
         .body(Body::empty())?;
 
@@ -82,6 +123,6 @@ pub async fn add(
 
 pub fn routes() -> Routes {
     Routes::new()
-        .add("/{short_code}", get(redirect))
+        .add("/{code}", get(redirect))
         .add("/", post(add))
 }
