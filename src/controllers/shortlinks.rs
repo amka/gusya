@@ -1,3 +1,4 @@
+use crate::views::shortlinks::{AddShortLinkPayload, AddShortLinkResponse};
 use axum::body::Body;
 use axum::debug_handler;
 use axum::http::StatusCode;
@@ -5,23 +6,13 @@ use loco_rs::prelude::*;
 use serde::{Deserialize, Serialize};
 use tracing::debug;
 
-#[derive(Deserialize, Debug)]
-pub struct AddShortLinkPayload {
-    pub url: String,
-}
-
-#[derive(Serialize, Debug)]
-pub struct AddShortLinkResponse {
-    pub short_code: String,
-}
-
 #[debug_handler]
 pub async fn redirect(
     Path(short_code): Path<String>,
     State(_ctx): State<AppContext>,
 ) -> Result<impl IntoResponse> {
     debug!("redirect to {}", short_code);
-    
+
     // Set the location header and 302 status code
     let response = Response::builder()
         .status(StatusCode::FOUND)
