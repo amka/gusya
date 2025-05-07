@@ -73,7 +73,7 @@
         <div class="theme-toggle" id="themeToggle">
             <div class="toggle-thumb"></div>
         </div>
-        <a href="/" class="px-4 py-2 rounded-md font-medium bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:from-amber-500 hover:to-orange-600 transition">На главную</a>
+        <a href="/" class="px-4 py-2 rounded-lg font-large bg-gradient-to-r btn-warning from-amber-400 to-orange-500 text-white hover:from-amber-500 hover:to-orange-600 transition">На главную</a>
     </div>
 </header>
 
@@ -102,10 +102,10 @@
             </p>
 
             <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
-                <a href="/" class="px-6 py-3 rounded-md font-medium bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:from-amber-500 hover:to-orange-600 transition pulse">
+                <a href="/" class="px-6 py-3 rounded-lg btn btn-lg font-medium bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:from-amber-500 hover:to-orange-600 transition pulse">
                     <i class="fas fa-home mr-2"></i> Вернуться на главную
                 </a>
-                <a href="#" class="px-6 py-3 rounded-md font-medium border border-amber-500 text-amber-500 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+                <a href="#" class="px-6 py-3 rounded-lg btn btn-lg font-medium border border-amber-500 text-amber-500 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
                     <i class="fas fa-envelope mr-2"></i> Сообщить о проблеме
                 </a>
             </div>
@@ -126,12 +126,7 @@
 <!-- Footer -->
 <footer class="bg-gray-900 text-gray-300 py-8">
     <div class="container mx-auto px-4 text-center">
-        <p>© 2023 Gusya - Сервис сокращения ссылок. Все права защищены.</p>
-        <div class="flex justify-center space-x-6 mt-4">
-            <a href="#" class="hover:text-amber-400 transition">Политика конфиденциальности</a>
-            <a href="#" class="hover:text-amber-400 transition">Условия использования</a>
-            <a href="#" class="hover:text-amber-400 transition">Контакты</a>
-        </div>
+       {% include "partials/footer.html" %}
     </div>
 </footer>
 
