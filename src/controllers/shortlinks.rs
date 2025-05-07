@@ -67,7 +67,8 @@ pub async fn add(
     // Формирование ответа
     let full_url = format!(
         "{}/{}",
-        link.domain.unwrap_or_else(|| _ctx.config.server.full_url().clone()),
+        link.domain
+            .unwrap_or_else(|| _ctx.config.server.full_url().clone()),
         link.short_code
     );
 
