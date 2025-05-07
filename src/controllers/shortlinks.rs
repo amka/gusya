@@ -36,6 +36,17 @@ pub async fn redirect(
     Ok(response)
 }
 
+/// Add new short link
+///
+/// # Errors
+///
+/// If there is an error in database interaction, an error variant will be returned.
+///
+/// # Response
+///
+/// The response will be a JSON object in the following format:
+///
+///
 #[debug_handler]
 pub async fn add(
     State(_ctx): State<AppContext>,
@@ -52,8 +63,20 @@ pub async fn add(
     };
 
     let link = Model::create_link(&_ctx.db, &params).await?;
-    let short_code = link.short_code;
-    format::json(AddShortLinkResponse { short_code })
+
+    // Формирование ответа
+    let full_url = format!(
+        "{}/{}",
+        link.domain.unwrap_or_else(|| _ctx.config.server.full_url().clone()),
+        link.short_code
+    );
+
+    format::json(AddShortLinkResponse {
+        short_code: link.short_code,
+        short_url: full_url,
+        // qr_code: generate_qr_code(&full_url), // Реализовать отдельно
+        qr_code: None,
+    })
 }
 
 pub fn routes() -> Routes {

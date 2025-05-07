@@ -2,6 +2,7 @@ use gusya::app::App;
 use insta::assert_debug_snapshot;
 use loco_rs::testing::prelude::*;
 use serial_test::serial;
+use gusya::views::shortlinks::AddShortLinkResponse;
 
 #[tokio::test]
 #[serial]
@@ -25,7 +26,9 @@ async fn can_create_short_link() {
             }))
             .await;
 
-        assert_debug_snapshot!((res.status_code(), res.text()));
+        assert_eq!(res.status_code(), 200);
+        assert_eq!(res.json::<AddShortLinkResponse>().short_code.is_empty(), false);
+        assert_eq!(res.json::<AddShortLinkResponse>().short_url.is_empty(), false);
     })
     .await;
 }

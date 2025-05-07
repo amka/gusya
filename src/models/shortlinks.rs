@@ -42,6 +42,22 @@ impl Model {
         nanoid!(6) // 6 символов из алфавита по умолчанию
     }
 
+    /// Создает новый `Shortlink`
+    ///
+    /// # Arguments
+    ///
+    /// * `db` - соединение с БД
+    /// * `params` - параметры создаваемого `Shortlink`
+    ///
+    /// # Errors
+    ///
+    /// * `Error::BadRequest` - если переданный URL не является валидным URL
+    /// * `Error::Model(ModelError::EntityAlreadyExists)` - если кастомный алиас уже существует
+    /// * `Error::CustomError(StatusCode::INTERNAL_SERVER_ERROR)` - если не удалось сгенерировать уникальный `short_code`
+    ///
+    /// # Examples
+    ///
+    ///
     pub async fn create_link(db: &DatabaseConnection, params: &AddParams) -> Result<Self, Error> {
         // Валидация URL
         let url = Url::parse(&params.original_url).map_err(|e| Error::BadRequest(e.to_string()))?;
@@ -91,7 +107,6 @@ impl Model {
         Ok(link.insert(db).await?)
     }
 
-    // Хелпер-методы для проверки существования
     async fn exists_by_code(db: &DatabaseConnection, code: &str) -> Result<bool, Error> {
         Ok(Entity::find()
             .filter(Column::ShortCode.eq(code))
@@ -108,7 +123,6 @@ impl Model {
             > 0)
     }
 
-    // Проверка заблокированных доменов
     async fn check_blocked_domains(domain: &str) -> Result<(), Error> {
         // Реализация проверки через таблицу BlockedDomain
         // ...
